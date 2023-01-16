@@ -3,6 +3,8 @@ package com.example.hotel.controllers;
 import com.example.hotel.models.RoomModel;
 import com.example.hotel.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,26 +18,26 @@ public class RoomController {
     RoomService roomService;
 
     @GetMapping()
-    public ArrayList<RoomModel> getRooms(){
-        return roomService.getRooms();
+    public ResponseEntity<ArrayList<RoomModel>> getRooms(){
+        return new ResponseEntity<>(roomService.getRooms(), HttpStatus.OK);
     }
     @GetMapping(path = "/{id}")
-    public Optional<RoomModel> getRoombyId(@PathVariable("id") long id){
-        return roomService.getRoombyId(id);
+    public ResponseEntity<Optional<RoomModel>> getRoombyId(@PathVariable("id") long id){
+        return  new ResponseEntity<>(roomService.getRoombyId(id),HttpStatus.OK);
     }
 
     @PostMapping()
-    public RoomModel saveRoom(@RequestBody RoomModel room){
-        return roomService.saveRoom(room);
+    public ResponseEntity<RoomModel> saveRoom(@RequestBody RoomModel room){
+        return new ResponseEntity<>(roomService.saveRoom(room),HttpStatus.CREATED );
     }
 
     @DeleteMapping("/{id}")
-    public Object deleteRoom(@PathVariable("id") long id){
+    public ResponseEntity<Object> deleteRoom(@PathVariable("id") long id){
         boolean ok = roomService.deleteRoom(id);
         if (ok) {
-            return "Room " + id + " deleted";
+            return  new ResponseEntity<>("Room"+ id + " deleted",HttpStatus.OK) ;
         }else{
-            return "Room "+ id +" was not found";
+            return new ResponseEntity<>("Room"+ id + " was not found",HttpStatus.BAD_REQUEST) ;
         }
 
     }

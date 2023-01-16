@@ -20,8 +20,8 @@ public class UserController {
     public Map<String, Object> getUsers(){
         Map<String, Object> res = new HashMap<>();
         ArrayList<UserModel> listaUsuarios =  userService.getUsers();
-        String mensaje = "Usuarios Listados";
-        res.put("Usuarios",listaUsuarios);
+        String mensaje = "Users ";
+        res.put("Users",listaUsuarios);
         res.put("Message",mensaje);
 
         return res;
@@ -41,9 +41,9 @@ public class UserController {
     public String deleteUser (@PathVariable("id")  long id){
         boolean ok = userService.deleteUser(id);
         if (ok){
-            return "Se elimino al usuario " + id;
+            return "Deleted user " + id;
         }else{
-            return "No se encontro el usuario" + id;
+            return "Couldn´t find user " + id;
         }
     }
 
@@ -52,7 +52,7 @@ public class UserController {
         Map<String, Object> res = new HashMap<>();
         UserModel elementoagregado = userService.saveUser(user);
         res.put("user",elementoagregado);
-        String mensaje = "Usuario creado correctamente";
+        String mensaje = "User Created";
         res.put("Message",mensaje);
         return res;
     }

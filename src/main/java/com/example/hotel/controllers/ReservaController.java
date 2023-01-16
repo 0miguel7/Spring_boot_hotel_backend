@@ -3,6 +3,8 @@ package com.example.hotel.controllers;
 import com.example.hotel.models.ReservaModel;
 import com.example.hotel.services.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
@@ -17,35 +19,35 @@ public class ReservaController {
     @Autowired
     ReservaService reservaService;
     @GetMapping()
-    public ArrayList<ReservaModel> getReservas()  {
-        return reservaService.getReservas();
+    public ResponseEntity<ArrayList<ReservaModel>> getReservas()  {
+        return new ResponseEntity<>(reservaService.getReservas(), HttpStatus.OK)  ;
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<ReservaModel> getReservaById (@PathVariable("id") long id){
-        return reservaService.getReservabyId(id);
+    public ResponseEntity<Optional<ReservaModel>> getReservaById (@PathVariable("id") long id){
+        return new ResponseEntity<>(reservaService.getReservabyId(id),HttpStatus.OK) ;
     }
 
     @PostMapping()
-    public Object createReserva (@RequestBody ReservaModel reserva) throws ParseException {
+    public ResponseEntity<Object> createReserva (@RequestBody ReservaModel reserva) throws ParseException {
         boolean flag = reservaService.verifyReserva(reserva);
 
         if (flag){
-            return reservaService.createReserva(reserva);
+            return new ResponseEntity<>(reservaService.createReserva(reserva),HttpStatus.CREATED);
         }else{
-            return "Cruce de horarios";
+            return new ResponseEntity<>("Invalid Date",HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @DeleteMapping(path = "/{id}")
-    public String deleteReserva(@PathVariable("id") long id){
+    public ResponseEntity<String> deleteReserva(@PathVariable("id") long id){
         boolean ok = reservaService.deleteReserva(id);
 
         if (ok) {
-            return "Reserva eliminada";
+            return new ResponseEntity<>("Reservation Deleted",HttpStatus.OK) ;
         }else{
-            return "Resreva no eliminada";
+            return new ResponseEntity<>("Not found",HttpStatus.NOT_FOUND);
         }
     }
 }
