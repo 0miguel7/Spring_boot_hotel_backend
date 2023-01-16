@@ -1,9 +1,7 @@
 package com.example.hotel.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "habitacion")
@@ -11,18 +9,19 @@ public class RoomModel {
 
 
     @Id
-    private long habitacionid;
-    private long hotelid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long habitacionid;
+    private Long hotelid;
     private int nivel;
     private int aforo;
     private int camaspersonales;
     private int camasdoble;
     private int precio;
-    public long getHotelid() {
+    public Long getHotelId() {
         return hotelid;
     }
 
-    public void setHotelid(long hotelid) {
+    public void setHotelId(Long hotelid) {
         this.hotelid = hotelid;
     }
 
@@ -42,19 +41,19 @@ public class RoomModel {
         this.aforo = aforo;
     }
 
-    public int getCamaspersonales() {
+    public int getCamasPersonales() {
         return camaspersonales;
     }
 
-    public void setCamaspersonales(int camaspersonales) {
+    public void setCamasPersonales(int camaspersonales) {
         this.camaspersonales = camaspersonales;
     }
 
-    public int getCamasdoble() {
+    public int getCamasDoble() {
         return camasdoble;
     }
 
-    public void setCamasdoble(int camasdoble) {
+    public void setCamasDoble(int camasdoble) {
         this.camasdoble = camasdoble;
     }
 
@@ -66,11 +65,10 @@ public class RoomModel {
         this.precio = precio;
     }
 
-    public long getHabitacionid() {
+    public Long getHabitacionId() {
         return habitacionid;
     }
-
-    public void setHabitacionid(long habitacionid) {
+    public void setHabitacionId(Long habitacionid) {
         this.habitacionid = habitacionid;
     }
 }

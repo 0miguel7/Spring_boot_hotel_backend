@@ -6,22 +6,22 @@ import jakarta.persistence.*;
 @Table(name = "usuario")
 public class UserModel {
 
-    @Id/*
-    @GeneratedValue
-    @Column(unique = true,nullable = false)*/
-    private long usuarioid;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "usuarioid")
+    private Long usuarioid;
     private String nombres;
     private String apellidos;
     private String correo;
-    private long telefono;
+    private Long telefono;
     private String password;
 
-    public long getUsuarioId() {
+    public Long getUsuarioId() {
         return usuarioid;
     }
 
-    public void setUsuarioId(long usuarioId) {
-        this.usuarioid = usuarioId;
+    public void setUsuarioId(Long usuarioid) {
+        this.usuarioid = usuarioid;
     }
 
     public String getNombres() {
@@ -48,11 +48,11 @@ public class UserModel {
         this.correo = correo;
     }
 
-    public long getTelefono() {
+    public Long getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
 

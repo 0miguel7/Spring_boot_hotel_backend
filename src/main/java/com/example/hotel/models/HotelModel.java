@@ -1,24 +1,23 @@
 package com.example.hotel.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "hotel")
 public class HotelModel {
     @Id
-    private long hotelid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long hotelid;
     private String direccion;
     private int niveles;
     private String distrito;
     private String ciudad;
 
-    public long getHotelid() {
+    public Long getHotelId() {
         return hotelid;
     }
 
-    public void setHotelid(long hotelid) {
+    public void setHotelId(Long hotelid) {
         this.hotelid = hotelid;
     }
 

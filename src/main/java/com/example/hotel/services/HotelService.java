@@ -22,7 +22,7 @@ public class HotelService {
     }
 
     public HotelModel saveHotel(HotelModel hotel){
-        return hotelRepository.save(hotel);
+        return hotelRepository.saveAndFlush(hotel);
     }
 
     public boolean deleteHotel(long id){

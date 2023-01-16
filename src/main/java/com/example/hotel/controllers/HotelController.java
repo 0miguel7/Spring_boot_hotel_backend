@@ -2,7 +2,11 @@ package com.example.hotel.controllers;
 
 import com.example.hotel.models.HotelModel;
 import com.example.hotel.services.HotelService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,27 +20,27 @@ public class HotelController {
     HotelService hotelService;
 
     @GetMapping()
-    public ArrayList<HotelModel> getHotels(){
-        return hotelService.getHotels();
+    public ResponseEntity<ArrayList<HotelModel>> getHotels(){
+        return new ResponseEntity<>(hotelService.getHotels(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{id]")
-    public Optional<HotelModel> getHotelbyId(@PathVariable("id") long id){
-        return hotelService.getHotelbyId(id);
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Optional<HotelModel>> getHotelbyId(@PathVariable("id") long id){
+        return new ResponseEntity<>(hotelService.getHotelbyId(id),HttpStatus.OK);
     }
 
     @PostMapping()
-    public HotelModel saveHotel(@RequestBody HotelModel hotel){
-        return hotelService.saveHotel(hotel);
+    public ResponseEntity<HotelModel> saveHotel(@RequestBody HotelModel hotel){
+        return new ResponseEntity<>(hotelService.saveHotel(hotel),HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
-    public String deleteHotel(@PathVariable("id") long id){
+    public ResponseEntity<String> deleteHotel(@PathVariable("id") long id){
         boolean ok = hotelService.deleteHotel(id);
         if (ok) {
-            return "Hotel "+ id+ " deleted";
+            return new ResponseEntity<>("Hotel "+ id+ " deleted",HttpStatus.OK);
         }else{
-            return "Couldn´t delete hoteld "+id;
+            return new ResponseEntity<>("Couldn´t delete hotel "+ id,HttpStatus.NOT_FOUND);
         }
     }
 }
